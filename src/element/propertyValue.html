@@ -1,0 +1,69 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<dom-module id="property-value">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+
+        <div role="listbox">
+            <paper-icon-item>
+                <div class="avatar blue" slot="item-icon"></div>
+                <paper-item-body two-line>
+                    <div>{{propName}}</div>
+                    <div secondary>{{value}}</div>
+                </paper-item-body>
+            </paper-icon-item>
+        </div>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'property-value',
+        ready: function() {
+
+        },
+        _propNameChanged:function(){
+
+        },
+        _propValueChanged:function(newPropVal){
+            this.set('propertie',newPropVal.split('?')[0])
+            this.set('value',newPropVal.split('?')[1])
+            this.set('propName',this.propertie.split('#')[1])
+        },
+        constraintsChanged:function(event){
+            console.log(event)
+        },
+        properties: {
+            constraint:{
+                type:String,
+                notify:true,
+                observer:'constraintsChanged',
+            },
+            propValue:{
+                type:String,
+                notify:true,
+                observer:'_propValueChanged'
+            },
+            propertie: {
+                type: String,
+                reflectToAttribute: true,
+                notify:true,
+            },
+            value: {
+                type: String,
+                notify: true,
+                reflectToAttribute: true,
+
+            }
+        },
+
+    });
+    </script>
+</dom-module>

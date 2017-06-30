@@ -1,0 +1,93 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="./propertyValue.html">
+<dom-module id="specie-element">
+    <template>
+        <style>
+        :host {}
+        
+        paper-card[hidden] {
+            display: none;
+        }
+        </style>
+        <paper-card hidden={{incorrect}} style="margin: 3px;" heading="[[formattedName]]" image="" elevation="1" animated-shadow="false">
+            <div class="card-content">
+                <paper-toggle-button on-change='call' checked='{{isCheck}}'>Afficher propriétés</paper-toggle-button>
+                <iron-collapse opened=[[isCheck]] id="collapse">
+                    <template is="dom-repeat" items="{{propValues}}">
+                        <property-value propertie={{prop}} value={{val}} prop-value={{item}}></property-value>
+                    </template>
+                </iron-collapse>
+            </div>
+            <div class="card-actions">
+            </div>
+        </paper-card>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'specie-element',
+        ready: function() {
+
+        },
+        call: function() {
+            this.fire('specieReady', null)
+        },
+        _propValObserver: function(propVal) {
+            this.propValues = []
+
+            var propValArray = propVal.split(',')
+            this.set('propValues', propValArray)
+
+
+
+        },
+        constraintsChanged: function(constraint) {
+            var x
+            this.constraint = x
+            this.set('constraint', constraint)
+        },
+        nameChanged: function(name) {
+            name = name.replace(/([A-Z])/g, ' $1').trim()
+            this.set('formattedName', name)
+        },
+        _specieConstraintChanged: function(elem) {
+            var propValue = JSON.parse(elem)
+            for (var i = 0; i < propValue.length; i++) {
+                var propval = propValue[i].prop + '?' + propValue[i].value
+                if (this.propsValues.indexOf(propval) == -1) {
+                    this.set('incorrect', true)
+                    return
+                }
+            }
+              this.set('incorrect',null)
+        },
+
+        properties: {
+            name: {
+                type: String,
+                notify: true,
+                observer: 'nameChanged',
+            },
+            constraint: {
+                type: String,
+                notify: true,
+                observer: '_specieConstraintChanged'
+            },
+            propsValues: {
+                type: String,
+                notify: true,
+                observer: '_propValObserver',
+            },
+
+        },
+
+    });
+    </script>
+</dom-module>

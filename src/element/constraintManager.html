@@ -1,0 +1,71 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<dom-module id="constraint-manager">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'constraint-manager',
+        ready: function() {
+            this.set('constraint', [])
+        },
+        getConstraint: function() {
+            return this.constraint
+        },
+        setConstraint: function(constraint) {
+            var newConstraint = {
+                prop: constraint.prop,
+                value: constraint.value
+            }
+            for (var i = 0; i < this.constraint.length; i++) {
+                if (this.constraint[i].prop == newConstraint.prop && newConstraint.value == 'NA') {
+                    this.splice('constraint', i, 1)
+                    this.fire('iron-signal', {
+                        name: 'constraint',
+                        data: this.constraint
+                    })
+                    this.constraintString = JSON.stringify(this.constraint)
+                    return
+
+                }
+
+                if (this.constraint[i].prop == newConstraint.prop) {
+                    this.constraint[i].value = newConstraint.value
+                    this.fire('iron-signal', {
+                        name: 'constraint',
+                        data: this.constraint
+                    })
+                    this.constraintString = JSON.stringify(this.constraint)
+
+                    return
+
+                }
+            }
+            if (newConstraint.value == 'NA') {
+                return
+            }
+            this.push('constraint', newConstraint)
+            this.fire('iron-signal', {
+                name: 'constraint',
+                data: this.constraint
+            })
+            this.constraintString = JSON.stringify(this.constraint)
+
+        },
+        properties: {
+            constraintString: {
+                type: String,
+                reflectToAttribute: true,
+                notify:true,
+            },
+        },
+
+    });
+    </script>
+</dom-module>

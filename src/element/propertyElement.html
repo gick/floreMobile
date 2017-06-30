@@ -1,0 +1,92 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<dom-module id="property-element">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+        <iron-signals id='constraintSignal'></iron-signals>
+        <iron-ajax id='propLoader' auto handle-as="json" last-response="{{propValues}}"></iron-ajax>
+        <iron-ajax id='propConstraintLoader' handle-as="json" params={{constraints}} last-response="{{propValues}}"></iron-ajax>
+        <paper-dropdown-menu label="{{name}}">
+            <paper-listbox id='propBox' slot="dropdown-content">
+                <paper-item>NA</paper-item>
+                <template is='dom-repeat' items='{{propValues}}'>
+                    <paper-item>{{item.value.value}}</paper-item>
+                </template>
+            </paper-listbox>
+        </paper-dropdown-menu>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'property-element',
+        ready: function() {
+            this.$.propBox.addEventListener('selected-item-changed', this.selectedChanged.bind(this))
+
+            // the child listens to the parent's event
+            this.$.constraintSignal.addEventListener('iron-signal-constraint', this.constraintsChanged.bind(this));
+
+        },
+        selectedChanged: function(event) {
+            if (event && event.detail && event.detail.value)
+                this.fire('propConstraint', {
+                    prop: this.propertyUri,
+                    value: event.detail.value.innerText
+                })
+        },
+        _propertyURIChanged: function(propName) {
+            if (propName) {
+                var name = propName.split('#')[1]
+                this.set('name', name)
+                this.$.propLoader.url = '../../listPropValue/' + name
+                this.$.propLoader.generateRequest()
+
+            }
+            // body...
+        },
+        constraintsChanged: function(event) {
+            var elem = event.detail
+            var consStringArray = []
+            for (var i = 0; i < elem.length; i++) {
+                var newConstraint = '<' + elem[i].prop + '> ' + '"' + elem[i].value + '"'
+                consStringArray.push(newConstraint)
+            }
+            // console.log(consStringArray)
+            if (consStringArray.length >= 0) {
+                this.set('constraints', {
+                    propName: this.name,
+                    value: consStringArray
+                })
+
+                console.log(this.constraints)
+                this.$.propConstraintLoader.url = '../../listPropConstraintValue'
+                this.$.propConstraintLoader.generateRequest()
+
+            }
+        },
+        _constraintObs: function(elem) {
+
+        },
+        properties: {
+            propertyUri: {
+                type: String,
+                notify: true,
+                observer: '_propertyURIChanged'
+            },
+            cons: {
+                type: Array,
+                notify: true,
+                observer: '_constraintObs'
+            }
+        },
+
+    });
+    </script>
+</dom-module>
