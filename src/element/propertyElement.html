@@ -2,7 +2,10 @@
 <link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
 <link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 <dom-module id="property-element">
     <template>
@@ -12,16 +15,25 @@
         }
         </style>
         <iron-signals id='constraintSignal'></iron-signals>
+
         <iron-ajax id='propLoader' auto handle-as="json" last-response="{{propValues}}"></iron-ajax>
         <iron-ajax id='propConstraintLoader' handle-as="json" params={{constraints}} last-response="{{propValues}}"></iron-ajax>
-        <paper-dropdown-menu label="{{name}}">
-            <paper-listbox id='propBox' slot="dropdown-content">
-                <paper-item>NA</paper-item>
-                <template is='dom-repeat' items='{{propValues}}'>
-                    <paper-item>{{item.value.value}}</paper-item>
-                </template>
-            </paper-listbox>
-        </paper-dropdown-menu>
+        <paper-card style="width:300px;margin:20px;" heading="{{name}}" image="" elevation="1" animated-shadow="false">
+            <div class="card-content">
+                <div>Definition : {{definition}}</div>
+                <paper-dropdown-menu label="{{name}}">
+
+                    <paper-listbox attr-for-selected='name' selected={{item}} id='propBox' slot="dropdown-content">
+                        <template is='dom-repeat' items='{{propValues}}'>
+                            <paper-item name={{item.value.value}}>{{item.value.value}}</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+            <div class="card-actions">
+            <paper-button on-click='resetValue'>Reset</paper-button>
+            </div>
+            </paper-card>
     </template>
     <script>
     Polymer({
@@ -34,7 +46,16 @@
             this.$.constraintSignal.addEventListener('iron-signal-constraint', this.constraintsChanged.bind(this));
 
         },
+        resetValue:function(){
+            this.selected=null
+                this.fire('propConstraint', {
+                    prop: this.propertyUri,
+                    value: 'NA'
+                })
+                this.set('item',{})
+        },
         selectedChanged: function(event) {
+            console.log(event.detail)
             if (event && event.detail && event.detail.value)
                 this.fire('propConstraint', {
                     prop: this.propertyUri,
@@ -79,6 +100,10 @@
                 type: String,
                 notify: true,
                 observer: '_propertyURIChanged'
+            },
+            definition: {
+                type: String,
+                notify: true,
             },
             cons: {
                 type: Array,

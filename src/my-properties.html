@@ -21,8 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         </style>
         <iron-ajax auto url="../../listProp" handle-as="json" last-response="{{props}}"></iron-ajax>
-        <template is="dom-repeat" items={{props}}>
-            <property-element cons={{constraints}} property-uri={{item.prop.value}}>
+        <template initial-count=5 is="dom-repeat" items={{props}}>
+            <property-element  cons={{constraints}} definition={{item.label.value}} property-uri={{item.prop.value}}>
             </property-element>
         </template>
     </template>

@@ -7,7 +7,7 @@
 <link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
 <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="./propertyValue.html">
-<dom-module id="specie-element">
+<dom-module id="post-specie">
     <template>
         <style>
         :host {}
@@ -33,9 +33,12 @@
     <script>
     Polymer({
 
-        is: 'specie-element',
+        is: 'post-specie',
         ready: function() {
 
+        },
+        postToInventory:function(){
+            
         },
         call: function() {
             this.fire('specieReady', null)
