@@ -70,6 +70,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <a name="intro" href="/#intro">Instructions</a>
                     <a name="properties" href="/#properties">Clef d'identification</a>
                     <a name="species" href="/#species">Espèces candidates : {{specieNumber}}</a>
+                    <a name="registering" href="/#registering">Registering</a>
+
                 </iron-selector>
             </app-drawer>
             <!-- Main content -->
@@ -84,7 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                     <my-intro name="intro"></my-intro>
                     <my-properties name="properties"></my-properties>
                     <my-species constraint-string="{{specieConstraint}}" id='species' name="species"></my-species>
-                    <my-view404 name="view404"></my-view404>
+                    <my-registering name="registering"></my-registering>
                 </iron-pages>
             </app-header-layout>
         </app-drawer-layout>
@@ -96,17 +98,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.addEventListener('propConstraint', this.setConstraint.bind(this))
             this.addEventListener('specieReady', this.setSpecieConstraint.bind(this))
 
-            this.$.contraintSignal.addEventListener('iron-signal-constraint', this.setUpConstraint.bind(this))
+           this.$.contraintSignal.addEventListener('iron-signal-constraint', this.constraintsChanged.bind(this))
                 //this.$.contraintSignal.addEventListener('iron-signal-specie', this.setSpecieConstraint.bind(this))
         },
         setUpConstraint: function(elem) {
-            this.constraintsChanged(elem)
             if (this.$$('#species').setConstraint) {
                 this.$$('#species').setConstraint(this.constraintString)
             }
         },
 
+        constraintStringObserver(elem){
+            if (this.$$('#species').setConstraint) {
+                this.$$('#species').setConstraint(elem)
+            }
 
+        },
 
         constraintsChanged: function(event) {
             var elem = event.detail
@@ -151,6 +157,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         observers: [
             '_routePageChanged(routeData.page)',
+            'constraintStringObserver(constraintString)'
         ],
 
         _routePageChanged: function(page) {

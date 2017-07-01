@@ -5,28 +5,34 @@
 <link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 <link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
-<link rel="import" href="./propertyValue.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="./imageResizer.html">
 <dom-module id="post-specie">
     <template>
         <style>
         :host {}
         
+        paper-card {
+            display: block;
+        }
+        
         paper-card[hidden] {
             display: none;
         }
         </style>
-        <paper-card hidden={{incorrect}} style="margin: 3px;" heading="[[formattedName]]" image="" elevation="1" animated-shadow="false">
+        <paper-card heading="Enregistrer un relevé" image="" elevation="1" animated-shadow="false">
             <div class="card-content">
-                <paper-toggle-button on-change='call' checked='{{isCheck}}'>Afficher propriétés</paper-toggle-button>
-                <iron-collapse opened=[[isCheck]] id="collapse">
-                    <template is="dom-repeat" items="{{propValues}}">
-                        <property-value  prop-value={{item}}></property-value>
-                    </template>
-                </iron-collapse>
+                <div> Espèce : {{name}}</div>
+                <paper-toggle-button on-change='call' checked='{{isCheck}}'>Enregistrer coordonées GPS</paper-toggle-button>
+                <div style='display:inline-block;'>
+                    <image-resizer></image-resizer>
+                </div>
             </div>
             <div class="card-actions">
-            <paper-button on-click='postToInventory'>Poster dans l'inventaire</paper-button>
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm autofocus>Accept</paper-button>
             </div>
         </paper-card>
     </template>
@@ -37,40 +43,8 @@
         ready: function() {
 
         },
-        postToInventory:function(){
-            
-        },
-        call: function() {
-            this.fire('specieReady', null)
-        },
-        _propValObserver: function(propVal) {
-            this.propValues = []
-
-            var propValArray = propVal.split(',')
-            this.set('propValues', propValArray)
-
-
-
-        },
-        constraintsChanged: function(constraint) {
-            var x
-            this.constraint = x
-            this.set('constraint', constraint)
-        },
-        nameChanged: function(name) {
-            name = name.replace(/([A-Z])/g, ' $1').trim()
-            this.set('formattedName', name)
-        },
-        _specieConstraintChanged: function(elem) {
-            var propValue = JSON.parse(elem)
-            for (var i = 0; i < propValue.length; i++) {
-                var propval = propValue[i].prop + '?' + propValue[i].value
-                if (this.propsValues.indexOf(propval) == -1) {
-                    this.set('incorrect', true)
-                    return
-                }
-            }
-              this.set('incorrect',null)
+        open: function() {
+            this.$.postDial.open()
         },
 
         properties: {
@@ -84,12 +58,6 @@
                 notify: true,
                 observer: '_specieConstraintChanged'
             },
-            propsValues: {
-                type: String,
-                notify: true,
-                observer: '_propValObserver',
-            },
-
         },
 
     });

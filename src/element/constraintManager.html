@@ -35,7 +35,7 @@
                         data: this.constraint
                     })
                     this.constraintObj.constraint = this.constraint
-                    this.constraintString = JSON.stringify(this.constraint)
+                    this.set('constraintString', JSON.stringify(this.constraint))
                     return
 
                 }
@@ -46,7 +46,7 @@
                         name: 'constraint',
                         data: this.constraint
                     })
-                    this.constraintString = JSON.stringify(this.constraint)
+                    this.set('constraintString', JSON.stringify(this.constraint))
                     this.constraintObj.constraint = this.constraint
 
 
@@ -64,7 +64,7 @@
             })
             this.constraintObj.constraint = this.constraint
 
-            this.constraintString = JSON.stringify(this.constraint)
+            this.set('constraintString', JSON.stringify(this.constraint))
 
         },
         properties: {
