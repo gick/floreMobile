@@ -37,8 +37,8 @@
                 </template>
             </div>
             <div class="card-actions">
-                <paper-button on-click='incorrect'>Signaler relevé incorrect</paper-button>
-                <paper-button on-click='validate' dialog-confirm autofocus>Confirmer le relevé</paper-button>
+                <paper-button disabled on-click='incorrect'>Signaler relevé incorrect</paper-button>
+                <paper-button disabled on-click='validate' dialog-confirm autofocus>Confirmer le relevé</paper-button>
             </div>
         </paper-card>
     </template>
@@ -50,13 +50,15 @@
             this.$.incorrectDialog.addEventListener('confirmIncorrect',this.sendIncorrect.bind(this))
         },
         sendIncorrect:function(ev){
-            this.set('params',{"valid":false,"comment":ev.detail})
+            this.set('params',{"valid":false,"comment":ev.detail,"id":this.registerId})
+            this.$.ajax.generateRequest()
         },
         incorrect:function(){
             this.$.incorrectDialog.open()
         },
         validate: function() {
-            this.set('params','{"valid":true}')
+            this.set('params',{"valid":true,"id":this.registerId})
+            this.$.ajax.generateRequest()
         },
         _specieConstraintChanged: function(constraint) {
             var jsonArray = JSON.parse(constraint)

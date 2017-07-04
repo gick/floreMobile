@@ -21,6 +21,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
 <link rel="import" href="../src/element/constraintManager.html">
 <link rel="import" href="../src/element/authManager.html">
 <link rel="import" href="my-icons.html">
@@ -59,6 +61,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-weight: bold;
         }
         </style>
+        <paper-toast id='infoToast' text="{{infoText}}"></paper-toast>
         <auth-manager username={{username}} id='authManager'></auth-manager>
         <app-location use-hash-as-path route="{{route}}"></app-location>
         <app-route route="{{route}}" pattern="/#page" active={{activity}} data="{{routeData}}" tail="{{subroute}}"></app-route>
@@ -111,6 +114,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
             //this.$.contraintSignal.addEventListener('iron-signal-specie', this.setSpecieConstraint.bind(this))
+        },
+        showInfoToast:function(ev){
+            this.set('infoText',ev.detail)
+            this.$.infoToast.open()
+
         },
         setLoggedOut:function(){
             this.set('user', null)
@@ -200,8 +208,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             console.log(path)
         },
         _routePageChanged: function(page) {
-            console.log(this.routeData)
+            if(page=='registering' && !this.username){
+                this.page='intro'
+                return
+            }
             this.page = page || 'intro';
+
 
             if (!this.$.drawer.persistent) {
                 this.$.drawer.close();
