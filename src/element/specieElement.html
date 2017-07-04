@@ -13,12 +13,13 @@
     <template>
         <style>
         :host {}
-        
+        paper-card{
+            display:block;
+        }
         paper-card[hidden] {
             display: none;
         }
         </style>
-        <post-specie id='postSpecie'></post-specie>
         <paper-card hidden={{incorrect}} style="margin: 3px;" heading="[[formattedName]]" image="" elevation="1" animated-shadow="false">
             <div class="card-content">
                 <paper-toggle-button on-change='call' checked='{{isCheck}}'>Afficher propriétés</paper-toggle-button>
@@ -29,7 +30,7 @@
                 </iron-collapse>
             </div>
             <div class="card-actions">
-            <paper-button on-click='postToInventory'>Poster dans l'inventaire</paper-button>
+            <paper-button on-click='postToInventory'>Effectuer un relevé</paper-button>
             </div>
         </paper-card>
     </template>
@@ -41,7 +42,7 @@
 
         },
         postToInventory:function(){
-            this.$.postSpecie.open()
+            this.fire('postSpecie',{specieName:this.formattedName,constraint:this.constraint})
         },
         call: function() {
             this.fire('specieReady', null)

@@ -1,0 +1,107 @@
+<!--
+@license
+Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="shared-styles.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../bower_components/leaflet-map/leaflet-map.html">
+<dom-module id="my-profile">
+    <template>
+        <style include="shared-styles">
+        :host {
+            display: block;
+            padding: 10px;
+        }
+        
+        h3 {
+            margin-left: 21px;
+            margin-bottom: 0px;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        paper-card {
+            display: block;
+        }
+        </style>
+        <paper-card heading="Mon profil" image="" elevation="1" animated-shadow="false">
+            <h3>Mon niveau REVERIES</h3>
+            <div class="card-content">
+                <div role="listbox">
+                    <paper-icon-item>
+                        <iron-icon src="./images/amateur.png" slot="item-icon">
+                        </iron-icon>
+                        Niveau amateur éclairé
+                    </paper-icon-item>
+                    <paper-icon-item>
+                        <iron-icon src="./images/score.png" slot="item-icon">
+                        </iron-icon>
+                        Score : 1200 points
+                    </paper-icon-item>
+                </div>
+            </div>
+            <div class="card-actions">
+            </div>
+            <h3>Mes badges</h3>
+            <div class="card-content">
+                <div role="listbox">
+                    <paper-icon-item>
+                        <iron-icon src="./images/leaf.png" slot="item-icon">
+                        </iron-icon>
+                        Identification réussie de 30 espèces
+                    </paper-icon-item>
+                    <paper-icon-item>
+                        <iron-icon src="./images/helper.jpg" slot="item-icon">
+                        </iron-icon>
+                        A aider 10 débutants
+                    </paper-icon-item>
+                </div>
+            </div>
+            <div class="card-actions">
+                <paper-button on-click='logout'>Se déconnecter</paper-button>
+            </div>
+        </paper-card>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'my-profile',
+        ready: function() {
+
+
+        },
+        logout: function() {
+            this.fire('loggout')
+        },
+        properties: {
+            user: {
+                type: String,
+                notify: true,
+                observer: '_userObserver',
+            }
+        }
+    });
+    </script>
+</dom-module>

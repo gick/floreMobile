@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="./element/postedElement.html">
+<link rel="import" href="shared-styles.html">
+<dom-module id="my-collection">
+    <template>
+        <style include="shared-styles">
+        :host {
+            display: block;
+            padding: 10px;
+        }
+        </style>
+        <iron-ajax auto url="../../registerItem" last-response="{{registerItems}}"></iron-ajax>
+        <div id='specieGroup' style="">
+            <template is="dom-repeat" initial-count=5 items={{registerItems}}>
+                <posted-element  confidence='{{item.confidence}}' specie-image='{{item.image}}' constraint={{item.constraint}} specie-name={{item.specie}} register-id='{{item._id}}'></posted-element>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'my-collection',
+        ready: function() {
+
+        },
+        
+        
+    });
+    </script>
+</dom-module>

@@ -8,7 +8,12 @@
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
 <link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../../bower_components/geo-location/geo-location.html">
+
 <link rel="import" href="./imageResizer.html">
+<link rel="import" href="./propertyValue.html">
 <dom-module id="post-specie">
     <template>
         <style>
@@ -22,17 +27,30 @@
             display: none;
         }
         </style>
+        <iron-request id="xhr"></iron-request>
+        <geo-location high-accuracy latitude={{lat}} longitude={{long}} id="geo" idle></geo-location>
         <paper-card heading="Enregistrer un relevé" image="" elevation="1" animated-shadow="false">
             <div class="card-content">
-                <div> Espèce : {{name}}</div>
-                <paper-toggle-button on-change='call' checked='{{isCheck}}'>Enregistrer coordonées GPS</paper-toggle-button>
-                <div style='display:inline-block;'>
-                    <image-resizer></image-resizer>
+                <h3 style='margin-top: 0;display:inline'> Espèce </h3> <span>{{specieName}}</span>
+                <br>
+                <h3 style='margin-top: 0;display:inline'> Critères botaniques </h3>
+                <template is='dom-repeat' items='{{propValues}}'>
+                    <property-value prop-value={{item}}></property-value>
+                </template>
+                <paper-toggle-button display='margin-top:30px' on-change='call' checked='{{isCheck}}'>Enregistrer coordonées GPS</paper-toggle-button><br> 
+                <div>Confiance dans la précision du relevé :</div>
+                <paper-radio-group attr-for-selected='name' selected={{selected}} allow-empty-selection>
+                    <paper-radio-button name="ok">Tout à fait confiant</paper-radio-button>
+                    <paper-radio-button name="medium">Assez confiant</paper-radio-button>
+                    <paper-radio-button name="weak">Peu confiant</paper-radio-button>
+                </paper-radio-group><br>
+                <div style='display:inline-block;margin-top:10px;'>
+                    <image-resizer id='imageRegister'></image-resizer>
                 </div>
             </div>
             <div class="card-actions">
-                <paper-button dialog-dismiss>Cancel</paper-button>
-                <paper-button dialog-confirm autofocus>Accept</paper-button>
+                <paper-button dialog-dismiss>Annuler</paper-button>
+                <paper-button on-click='register' dialog-confirm autofocus>Enregistrer</paper-button>
             </div>
         </paper-card>
     </template>
@@ -43,12 +61,41 @@
         ready: function() {
 
         },
-        open: function() {
-            this.$.postDial.open()
+        call:function(){
+            if(this.isCheck){
+                this.$.geo.idle=false
+            }
         },
+        register: function() {
+            var formData = new FormData()
+            formData.append('image', this.$.imageRegister.getImage(), 'filename')
+            formData.append('specie', this.specieName)
+            formData.append('constraint', this.constraint)
+            formData.append('confidence', this.selected)
+            formData.append('latitude', this.lat)
+            formData.append('longitude', this.long)
 
+
+
+            this.$.xhr.send({
+                url: '../../registerItem',
+                method: 'POST',
+                body: formData
+            }).then(function(){this.fire('newRegister','Nouveau relevé enregistré avec succès').bind(this)});
+
+
+        },
+        _specieConstraintChanged: function(constraint) {
+            var jsonArray = JSON.parse(constraint)
+            var propValArray = []
+            for (var i = 0; i < jsonArray.length; i++) {
+                var newPropVal = jsonArray[i].prop + '?' + jsonArray[i].value
+                propValArray.push(newPropVal)
+            }
+            this.set('propValues', propValArray)
+        },
         properties: {
-            name: {
+            specieName: {
                 type: String,
                 notify: true,
                 observer: 'nameChanged',

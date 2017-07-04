@@ -18,9 +18,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-signals/iron-signals.html">
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../src/element/constraintManager.html">
+<link rel="import" href="../src/element/authManager.html">
 <link rel="import" href="my-icons.html">
 <dom-module id="my-app">
     <template>
@@ -57,39 +59,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             font-weight: bold;
         }
         </style>
+        <auth-manager username={{username}} id='authManager'></auth-manager>
         <app-location use-hash-as-path route="{{route}}"></app-location>
-        <app-route route="{{route}}" pattern="#/page" active={{activity}} data="{{routeData}}" tail="{{subroute}}"></app-route>
+        <app-route route="{{route}}" pattern="/#page" active={{activity}} data="{{routeData}}" tail="{{subroute}}"></app-route>
         <iron-ajax auto id='specieLoader' params={{constraints}} url="../listSpeciesConstraint" handle-as="json" on-response="handleResponse"></iron-ajax>
         <iron-signals id='contraintSignal'></iron-signals>
         <constraint-manager constraint-string={{constraintString}} id="manager"></constraint-manager>
-        <app-drawer-layout fullbleed>
-            <!-- Drawer content -->
-            <app-drawer id="drawer">
-                <app-toolbar>REVERIES collaborative inventory</app-toolbar>
-                <iron-selector selected="{{page}}" attr-for-selected="name" class="drawer-list" role="navigation">
-                    <a name="intro" href="/#intro">Instructions</a>
-                    <a name="properties" href="/#properties">Clef d'identification</a>
-                    <a name="species" href="/#species">Espèces candidates : {{specieNumber}}</a>
-                    <a name="registering" href="/#registering">Registering</a>
-
-                </iron-selector>
-            </app-drawer>
-            <!-- Main content -->
-            <app-header-layout has-scrolling-region>
-                <app-header condenses reveals effects="waterfall">
-                    <app-toolbar>
-                        <paper-icon-button icon="my-icons:menu" drawer-toggle></paper-icon-button>
-                        <div main-title>My App </div>
-                    </app-toolbar>
-                </app-header>
-                <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
-                    <my-intro name="intro"></my-intro>
-                    <my-properties name="properties"></my-properties>
-                    <my-species constraint-string="{{specieConstraint}}" id='species' name="species"></my-species>
-                    <my-registering name="registering"></my-registering>
-                </iron-pages>
-            </app-header-layout>
-        </app-drawer-layout>
+        <app-header reveals>
+            <app-toolbar>
+                <paper-icon-button icon="menu" on-click="toggleDrawer"></paper-icon-button>
+                <div main-title>REVERIES Flore</div>
+                <template is='dom-if' if='{{user}}'>
+                    <a href="/#profile" tabindex="-1">
+                        <paper-icon-button icon="icons:account-circle"></paper-icon-button>
+                    </a>
+                </template>
+            </app-toolbar>
+        </app-header>
+        <app-drawer id="drawer" style='z-index:1; ' swipe-open>
+            <iron-selector selected="{{page}}" attr-for-selected="name" class="drawer-list" role="navigation">
+                <a name="intro" href="/#intro">Instructions</a>
+                <a name="properties" href="/#properties">Clef d'identification</a>
+                <a name="species" href="/#species">Espèces candidates : {{specieNumber}}</a>
+                <a name="collection" href="/#collection">Evaluer relevés</a>
+            </iron-selector>
+        </app-drawer>
+        <iron-pages id='pages' selected="{{page}}" attr-for-selected="name" role="main">
+            <my-intro user={{user}} name="intro"></my-intro>
+            <my-properties user='{{}}' name="properties"></my-properties>
+            <my-species constraint-string="{{specieConstraint}}" id='species' name="species"></my-species>
+            <my-registering name="registering" register-values={{toRegister}} ></my-registering>
+            <my-userregister name="userregister"></my-userregister>
+            <my-profile username={{user}} name="profile"></my-profile>
+            <my-collection name='collection'></my-collection>
+        </iron-pages>
     </template>
     <script>
     Polymer({
@@ -97,9 +100,41 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         ready: function() {
             this.addEventListener('propConstraint', this.setConstraint.bind(this))
             this.addEventListener('specieReady', this.setSpecieConstraint.bind(this))
+            this.$.contraintSignal.addEventListener('iron-signal-constraint', this.constraintsChanged.bind(this))
+            this.addEventListener('userLogin', this.checkLogin.bind(this))
+            this.addEventListener('userRegistered', this.userRegistered.bind(this))
+            this.addEventListener('logged', this.setupLog.bind(this))
+            this.addEventListener('loggout', this.loggout.bind(this))
+            this.addEventListener('loggedOut', this.setLoggedOut.bind(this))
+            this.addEventListener('postSpecie', this.setPostSpecie.bind(this))
+            this.addEventListener('newRegister', this.showInfoToast.bind(this))
 
-           this.$.contraintSignal.addEventListener('iron-signal-constraint', this.constraintsChanged.bind(this))
-                //this.$.contraintSignal.addEventListener('iron-signal-specie', this.setSpecieConstraint.bind(this))
+
+            //this.$.contraintSignal.addEventListener('iron-signal-specie', this.setSpecieConstraint.bind(this))
+        },
+        setLoggedOut:function(){
+            this.set('user', null)
+            this.set('route.path','intro')
+            this.set('page','intro')
+        },
+        setPostSpecie:function(ev){
+          console.log(ev.detail)
+          this.set('route.path','registering')
+          this.set('toRegister',ev.detail)
+
+        },
+        setupLog: function(ev) {
+            this.set('user', ev.detail.name)
+        },
+        loggout:function(){
+          this.$.authManager.logout()
+        },
+        userRegistered: function() {
+            this.set('page', 'intro')
+            this.checkLogin();
+        },
+        checkLogin: function() {
+            this.$.authManager.checkAuth()
         },
         setUpConstraint: function(elem) {
             if (this.$$('#species').setConstraint) {
@@ -107,13 +142,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             }
         },
 
-        constraintStringObserver(elem){
+        constraintStringObserver(elem) {
             if (this.$$('#species').setConstraint) {
                 this.$$('#species').setConstraint(elem)
             }
 
         },
-
+        toggleDrawer: function() {
+            this.$.drawer.toggle()
+        },
         constraintsChanged: function(event) {
             var elem = event.detail
             var consStringArray = []
@@ -134,9 +171,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
             }
         },
-        handleResponse:function(event){
-          var currentList= event.detail.__data__.response
-          this.set('specieNumber',currentList.length)
+        handleResponse: function(event) {
+            var currentList = event.detail.__data__.response
+            this.set('specieNumber', currentList.length)
         },
 
         setSpecieConstraint: function() {
@@ -156,11 +193,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         observers: [
-            '_routePageChanged(routeData.page)',
+            '_routePageChanged(route.path)',
             'constraintStringObserver(constraintString)'
         ],
-
+        routeChanged: function(path) {
+            console.log(path)
+        },
         _routePageChanged: function(page) {
+            console.log(this.routeData)
             this.page = page || 'intro';
 
             if (!this.$.drawer.persistent) {
@@ -169,7 +209,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
 
         _pageChanged: function(page) {
-            // Load page import on demand. Show 404 page if fails
+            console.log(this.route)
+                // Load page import on demand. Show 404 page if fails
             var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
             this.importHref(resolvedPageUrl, null, this._showPage404, true);
         },

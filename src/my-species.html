@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
         </style>
         <iron-ajax auto url="../../listSpeciePropValues" last-response="{{species}}"></iron-ajax>
-        <div id='specieGroup' style="display:flex;flex-wrap: wrap;">
+        <div id='specieGroup' style="">
             <template is="dom-repeat" initial-count=5 items={{species}} on-dom-change='callReady'>
                 <specie-element constraint='{{specieConstraint}}' props-values={{item.props.value}} name={{item.speciesName.value}}></specie-element>
             </template>

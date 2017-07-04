@@ -1,0 +1,48 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="incorrect-dialog">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+        <paper-dialog id='incorrectDialog'>
+            <h2>Signaler erreur relevé</h2>
+            <paper-dialog-scrollable>
+                <div>Merci d'inclure un commentaire expliquant pourquoi vous pensez que ce relevé est incorrect.</div>
+                <paper-textarea value={{comment}} label="Commentaire"></paper-textarea>
+            </paper-dialog-scrollable>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Annuler</paper-button>
+                <paper-button on-click='send' dialog-confirm autofocus>Confirmer</paper-button>
+            </div>
+        </paper-dialog>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'incorrect-dialog',
+        ready: function() {
+
+        },
+        open:function(){
+            this.$.incorrectDialog.open()
+        },
+        send: function() {
+            this.fire('confirmIncorrect',this.comment)
+        },
+        properties: {
+            comment: {
+                type: String,
+                reflectToAttribute: true,
+            }
+        }
+
+    });
+    </script>
+</dom-module>

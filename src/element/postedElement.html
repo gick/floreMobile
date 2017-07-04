@@ -1,0 +1,99 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-item/paper-icon-item.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item-body.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="./incorrectDialog.html">
+
+<link rel="import" href="./propertyValue.html">
+<dom-module id="posted-element">
+    <template>
+        <style>
+        :host {}
+        
+        paper-card {
+            display: block;
+        }
+        
+        paper-card[hidden] {
+            display: none;
+        }
+        </style>
+        <iron-ajax params='{{params}}' id="ajax" url='../../confirmRegister'></iron-ajax>
+        <incorrect-dialog id='incorrectDialog'></incorrect-dialog>
+        <paper-card style='margin:5px' heading="Relevé" image="" elevation="1" animated-shadow="false">
+            <div class="card-content">
+                <h3 style='margin-top: 0;display:inline'> Espèce </h3> <span>{{specieName}}</span>
+                <br>
+                <h3 style='margin-top: 0;display:inline'> Critères botaniques</h3>
+                <template is='dom-repeat' items='{{propValues}}'>
+                    <property-value prop-value={{item}}></property-value>
+                </template>
+                <div>Confiance dans la précision du relevé : {{confidence}}</div>
+                <template is='dom-if' if='{{specieImage}}'>
+                    <iron-image src="../../file/{{specieImage}}" preload style='height: 300px;background-color: lightgray'></iron-image>
+                </template>
+            </div>
+            <div class="card-actions">
+                <paper-button on-click='incorrect'>Signaler relevé incorrect</paper-button>
+                <paper-button on-click='validate' dialog-confirm autofocus>Confirmer le relevé</paper-button>
+            </div>
+        </paper-card>
+    </template>
+    <script>
+    Polymer({
+
+        is: 'posted-element',
+        ready: function() {
+            this.$.incorrectDialog.addEventListener('confirmIncorrect',this.sendIncorrect.bind(this))
+        },
+        sendIncorrect:function(ev){
+            this.set('params',{"valid":false,"comment":ev.detail})
+        },
+        incorrect:function(){
+            this.$.incorrectDialog.open()
+        },
+        validate: function() {
+            this.set('params','{"valid":true}')
+        },
+        _specieConstraintChanged: function(constraint) {
+            var jsonArray = JSON.parse(constraint)
+            var propValArray = []
+            for (var i = 0; i < jsonArray.length; i++) {
+                var newPropVal = jsonArray[i].prop + '?' + jsonArray[i].value
+                propValArray.push(newPropVal)
+            }
+            this.set('propValues', propValArray)
+        },
+        properties: {
+            registerId:{
+                type:String,
+                notify:true,
+            },
+            specieName: {
+                type: String,
+                notify: true,
+                observer: 'nameChanged',
+            },
+            constraint: {
+                type: String,
+                notify: true,
+                observer: '_specieConstraintChanged'
+            },
+            specieImage:{
+                type:String,
+                notify:true,
+            },
+                    confidence:{
+                type:String,
+                notify:true,
+            },
+
+            
+        },
+
+    });
+    </script>
+</dom-module>

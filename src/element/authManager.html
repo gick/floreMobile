@@ -1,0 +1,46 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<dom-module id="auth-manager">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        </style>
+        <iron-ajax id="ajax" auto url="../../profile" handle-as="json" on-response="handleResponse"></iron-ajax> 
+        <iron-ajax id="loggedOut"  url="../../logout" on-response="loggedOut"></iron-ajax> 
+
+    </template>
+    <script>
+    Polymer({
+
+        is: 'auth-manager',
+        ready: function() {
+
+        },
+        logout:function(){
+            this.$.loggedOut.generateRequest()
+        },
+        loggedOut:function(){
+            this.fire('loggedOut',null)
+        },
+        checkAuth:function(){
+            this.$.ajax.generateRequest()
+        },
+        handleResponse: function(event) {
+            var res=event.detail.__data__.response
+            if(res.success){
+                this.fire('logged',res.user)
+            }
+        },
+        properties:{
+            username:{
+                type:String,
+                reflectToAttribute:true,
+            }
+        }
+
+    });
+    </script>
+</dom-module>

@@ -20,11 +20,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             padding: 10px;
         }
         </style>
-        <post-specie></post-specie>
+        <post-specie specie-name={{specieName}} constraint={{constraint}}></post-specie>
     </template>
     <script>
     Polymer({
         is: 'my-registering',
+        setRegisterVal:function(val){
+            console.log(val)
+            if(val && val.value && val.value.specieName){
+                this.set('specieName',val.value.specieName)
+            }
+            if(val && val.value && val.value.constraint){
+                this.set('constraint',val.value.constraint)
+            }
+
+        },
+        observers:['setRegisterVal(registerValues.*)'],
+        properties:{
+            registerValues:{
+                type:Object,
+                notify:true,
+            }
+        },
     });
     </script>
 </dom-module>

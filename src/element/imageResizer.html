@@ -40,7 +40,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.set('image', false)
 
         },
-
+        getImage:function(){
+            if(this.$.preview && this.$.preview.src){
+                return this.dataURItoBlob(this.$.preview.src)
+            }
+        },
         fileChanged: function(fileArray) {
             if (fileArray[0]) {
                 this.set('image', true)
