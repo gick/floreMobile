@@ -24,6 +24,7 @@
         },
         loggedOut:function(){
             this.fire('loggedOut',null)
+            this.set('user',null)
         },
         checkAuth:function(){
             this.$.ajax.generateRequest()
@@ -32,10 +33,11 @@
             var res=event.detail.__data__.response
             if(res.success){
                 this.fire('logged',res.user)
+                this.set('user',res.user)
             }
         },
         properties:{
-            username:{
+            user:{
                 type:String,
                 reflectToAttribute:true,
             }
