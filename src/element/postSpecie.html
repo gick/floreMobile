@@ -11,7 +11,6 @@
 <link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
 <link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../../bower_components/geo-location/geo-location.html">
-
 <link rel="import" href="./imageResizer.html">
 <link rel="import" href="./propertyValue.html">
 <dom-module id="post-specie">
@@ -37,13 +36,15 @@
                 <template is='dom-repeat' items='{{propValues}}'>
                     <property-value prop-value={{item}}></property-value>
                 </template>
-                <paper-toggle-button display='margin-top:30px' on-change='call' checked='{{isCheck}}'>Enregistrer coordonées GPS</paper-toggle-button><br> 
+                <paper-toggle-button display='margin-top:30px' on-change='call' checked='{{isCheck}}'>Enregistrer coordonées GPS</paper-toggle-button>
+                <br>
                 <div>Confiance dans la précision du relevé :</div>
-                <paper-radio-group attr-for-selected='name' selected={{selected}} allow-empty-selection>
+                <paper-radio-group id='options' attr-for-selected='name' selected-item='{{optionItem}}' selected={{selected}} allow-empty-selection>
                     <paper-radio-button name="ok">Tout à fait confiant</paper-radio-button>
                     <paper-radio-button name="medium">Assez confiant</paper-radio-button>
                     <paper-radio-button name="weak">Peu confiant</paper-radio-button>
-                </paper-radio-group><br>
+                </paper-radio-group>
+                <br>
                 <div style='display:inline-block;margin-top:10px;'>
                     <image-resizer id='imageRegister'></image-resizer>
                 </div>
@@ -61,9 +62,9 @@
         ready: function() {
 
         },
-        call:function(){
-            if(this.isCheck){
-                this.$.geo.idle=false
+        call: function() {
+            if (this.isCheck) {
+                this.$.geo.idle = false
             }
         },
         register: function() {
@@ -71,17 +72,20 @@
             formData.append('image', this.$.imageRegister.getImage(), 'filename')
             formData.append('specie', this.specieName)
             formData.append('constraint', this.constraint)
-            formData.append('confidence', this.selected)
+            if (this.optionItem)
+                formData.append('confidence', this.optionItem.innerText)
             formData.append('latitude', this.lat)
             formData.append('longitude', this.long)
 
-
+            var that = this
 
             this.$.xhr.send({
                 url: '../../registerItem',
                 method: 'POST',
                 body: formData
-            }).then(function(){this.fire('newRegister','Nouveau relevé enregistré avec succès').bind(this)});
+            }).then(function() {
+                that.fire('newRegister', 'Nouveau relevé enregistré avec succès')
+            });
 
 
         },

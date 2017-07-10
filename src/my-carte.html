@@ -1,0 +1,57 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/google-map/google-map.html">
+<link rel="import" href="../../bower_components/google-apis/google-maps-api.html">
+<link rel="import" href="../../bower_components/google-map/google-map-point.html">
+<link rel="import" href="../../bower_components/google-map/google-map-marker.html">
+<link rel="import" href="../../bower_components/google-map/google-map-poly.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/point-overlay/point-overlay.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="my-carte">
+    <template>
+        <style>
+        #map {
+            width: 500px;
+            height: 500px;
+            display: inline-flex;
+        }
+        </style>
+    <iron-ajax
+            id='ajax'
+         url="../releve"
+         handle-as="json"
+         on-response="handleResponse"></iron-ajax>
+    <google-map id='map' map="{{map}}" latitude="47.74" longitude="-0.61" zoom="13" disableDefaultUI></google-map>
+    <point-overlay map="{{map}}" data='{{data}}'></point-overlay>
+    <paper-button raised on-click='load'>Load</paper-button>
+    </template>
+
+    <script>
+    (function() {
+        'use strict';
+
+        Polymer({
+            is: 'my-carte',
+            load:function(){
+                this.$.ajax.generateRequest()
+            },
+            handleResponse:function(resp){
+                var response=resp.detail.__data__.response
+                for(var i=1;i<1000;i++){
+                    this.push('data',{"lat":response[i].Latitude,"lng":response[i].Longitude})
+                }
+
+                
+            },
+            ready: function() {
+                this.data=[]
+
+
+            },
+
+            
+        })
+    })();
+    </script>
+</dom-module>

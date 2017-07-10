@@ -1,0 +1,464 @@
+{
+ "type": "FeatureCollection",  "features":  [
+  {	"type":"Feature",
+     "geometry": {"type": "Point", "coordinates": ["45.25545", "5.93578"]},
+      "properties": {"name": "Globularia bisnagarica L."}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.25535", "5.93241"]},
+      "properties": {"name": "Anacamptis morio (L.) R.M.Bateman, Pridgeon & M.W.Chase"}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.25546", "5.93167"]},
+      "properties": {"name": "Potentilla neumanniana Rchb."}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.25544", "5.9355"]},
+      "properties": {"name": "Anacamptis pyramidalis (L.) Rich."}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.2553", "5.93353"]},
+      "properties": {"name": "Primula veris L."}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.2554", "5.93206"]},
+      "properties": {"name": "Primula vulgaris Huds."}
+    },
+  {"type":"feature",
+     "geometry": {"type": "Point", "coordinates": ["45.25586", "5.92958"]},
+      "properties": {"name": "Pulmonaria montana Lej."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25566", "5.92911"]},
+      "properties": {"name": "Hypericum montanum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25544", "5.93534"]},
+      "properties": {"name": "Orchis anthropophora (L.) All."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25538", "5.93523"]},
+      "properties": {"name": "Anacamptis pyramidalis (L.) Rich."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25539", "5.93487"]},
+      "properties": {"name": "Ophrys fuciflora (F.W.Schmidt) Moench"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25532", "5.93275"]},
+      "properties": {"name": "Orchis purpurea Huds."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25535", "5.93195"]},
+      "properties": {"name": "Orchis militaris L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25532", "5.93441"]},
+      "properties": {"name": "Orobanche caryophyllacea Sm."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25537", "5.93231"]},
+      "properties": {"name": "Orchis x hybrida Boenn. ex Rchb."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.2554", "5.93489"]},
+      "properties": {"name": "Tetragonolobus maritimus (L.) Roth"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25521", "5.934"]},
+      "properties": {"name": "Plantago lanceolata L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25518", "5.93378"]},
+      "properties": {"name": "Carex montana L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25543", "5.9315"]},
+      "properties": {"name": "Pulmonaria montana Lej."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25621", "5.92834"]},
+      "properties": {"name": "Lamium purpureum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25552", "5.93135"]},
+      "properties": {"name": "Potentilla neumanniana Rchb."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25527", "5.9347"]},
+      "properties": {"name": "Euphorbia dulcis L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25529", "5.93487"]},
+      "properties": {"name": "Sanguisorba minor Scop."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25529", "5.93601"]},
+      "properties": {"name": "Euphorbia amygdaloides L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25544", "5.93522"]},
+      "properties": {"name": "Anacamptis pyramidalis (L.) Rich."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25541", "5.93505"]},
+      "properties": {"name": "Orchis militaris L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25525", "5.93434"]},
+      "properties": {"name": "Orchis anthropophora (L.) All."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24095", "5.95842"]},
+      "properties": {"name": "Epipactis helleborine (L.) Crantz"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24005", "5.95821"]},
+      "properties": {"name": "Pyrola minor L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24126", "5.95828"]},
+      "properties": {"name": "Ranunculus flammula L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24038", "5.95752"]},
+      "properties": {"name": "Carex echinata Murray"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24049", "5.95808"]},
+      "properties": {"name": "Carex ovalis Gooden."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24027", "5.9582"]},
+      "properties": {"name": "Carex pallescens L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.2404", "5.95729"]},
+      "properties": {"name": "Carex panicea L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24126", "5.95828"]},
+      "properties": {"name": "Carex riparia Curtis"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25597", "5.93503"]},
+      "properties": {"name": "Anacamptis pyramidalis (L.) Rich."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25599", "5.9353"]},
+      "properties": {"name": "Orchis militaris L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25573", "5.92987"]},
+      "properties": {"name": "Fragaria vesca L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25594", "5.92926"]},
+      "properties": {"name": "Viola alba Besser"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25556", "5.93116"]},
+      "properties": {"name": "Hieracium murorum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22664", "5.9861"]},
+      "properties": {"name": "Juncus bufonius L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22462", "5.98706"]},
+      "properties": {"name": "Carex pallescens L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22643", "5.98633"]},
+      "properties": {"name": "Prenanthes purpurea L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22485", "5.98658"]},
+      "properties": {"name": "Impatiens noli-tangere L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22664", "5.98618"]},
+      "properties": {"name": "Juncus effusus L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22535", "5.98591"]},
+      "properties": {"name": "Persicaria hydropiper (L.) Spach"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22486", "5.98657"]},
+      "properties": {"name": "Epilobium montanum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22532", "5.98599"]},
+      "properties": {"name": "Holcus lanatus L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25617", "5.92863"]},
+      "properties": {"name": "Euphorbia flavicoma DC."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25611", "5.92871"]},
+      "properties": {"name": "Veronica persica Poir."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25545", "5.93599"]},
+      "properties": {"name": "Ranunculus tuberosus Lapeyr."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25443", "5.94979"]},
+      "properties": {"name": "Veronica hederifolia L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24047", "5.95759"]},
+      "properties": {"name": "Carex brunnescens (Pers.) Poir."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25417", "5.94614"]},
+      "properties": {"name": "Salix alba (gp)"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24518", "5.97347"]},
+      "properties": {"name": "Salix alba (gp)"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25309", "5.9752"]},
+      "properties": {"name": "Epipactis helleborine"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24222", "5.98172"]},
+      "properties": {"name": "Epipactis helleborine"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24761", "5.9811"]},
+      "properties": {"name": "Omalotheca sylvatica"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24483", "5.98118"]},
+      "properties": {"name": "Impatiens noli-tangere"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24614", "5.98145"]},
+      "properties": {"name": "Senecio ovatus subsp. ovatus"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24727", "5.98118"]},
+      "properties": {"name": "Cirsium vulgare"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24244", "5.98157"]},
+      "properties": {"name": "Monotropa hypopitys"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24592", "5.98122"]},
+      "properties": {"name": "Erigeron annuus"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25062", "5.98231"]},
+      "properties": {"name": "Linaria repens"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24227", "5.98168"]},
+      "properties": {"name": "Astrantia major"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24344", "5.98143"]},
+      "properties": {"name": "Circaea lutetiana"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23909", "5.95863"]},
+      "properties": {"name": "Lysimachia vulgaris"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.24076", "5.95613"]},
+      "properties": {"name": "Ranunculus flammula"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": [null, null]},
+      "properties": {"name": "Galanthus nivalis"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22197", "6.0066"]},
+      "properties": {"name": "Lycopodium annotinum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22445", "6.0009"]},
+      "properties": {"name": "Galium odoratum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22261", "6.00906"]},
+      "properties": {"name": "Cardamine amara"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22233", "6.0139"]},
+      "properties": {"name": "Viola thomasiana"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22246", "6.00897"]},
+      "properties": {"name": "Veronica serpyllifolia"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22258", "6.00897"]},
+      "properties": {"name": "Caltha palustris"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22048", "6.02477"]},
+      "properties": {"name": "Daphne mezereum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22195", "6.00672"]},
+      "properties": {"name": "Homogyne alpina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22261", "6.00906"]},
+      "properties": {"name": "Pinguicula vulgaris"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22263", "6.00903"]},
+      "properties": {"name": "Geum rivale"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22476", "6.00039"]},
+      "properties": {"name": "Polygonatum verticillatum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.21843", "6.02621"]},
+      "properties": {"name": "Lloydia serotina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22224", "6.00823"]},
+      "properties": {"name": "Saxifraga cuneifolia"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22308", "6.00262"]},
+      "properties": {"name": "Stellaria nemorum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22263", "6.00903"]},
+      "properties": {"name": "Saxifraga rotundifolia"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22063", "6.0248"]},
+      "properties": {"name": "Pinguicula alpina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22259", "6.00903"]},
+      "properties": {"name": "Saxifraga stellaris"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22067", "6.02459"]},
+      "properties": {"name": "Viola biflora"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22064", "6.02482"]},
+      "properties": {"name": "Bartsia alpina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.21778", "6.02896"]},
+      "properties": {"name": "Silene acaulis"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.21849", "6.02541"]},
+      "properties": {"name": "Saxifraga oppositifolia"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22152", "6.02328"]},
+      "properties": {"name": "Rhododendron ferrugineum"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22092", "6.02405"]},
+      "properties": {"name": "Primula hirsuta"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22064", "6.02455"]},
+      "properties": {"name": "Soldanella alpina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.2241", "6.00134"]},
+      "properties": {"name": "Dactylorhiza fuchsii"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22248", "6.01889"]},
+      "properties": {"name": "Dactylorhiza latifolia"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22195", "6.00642"]},
+      "properties": {"name": "Listera cordata"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22187", "6.00599"]},
+      "properties": {"name": "Listera cordata"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22428", "6.0011"]},
+      "properties": {"name": "Luzula nivea"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22187", "6.00601"]},
+      "properties": {"name": "Luzula luzulina"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22527", "5.9984"]},
+      "properties": {"name": "Lathyrus vernus"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22245", "6.02058"]},
+      "properties": {"name": "Ranunculus montanus"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25274", "5.93252"]},
+      "properties": {"name": "Coronilla varia L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25274", "5.93252"]},
+      "properties": {"name": "Salix caprea L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25274", "5.93252"]},
+      "properties": {"name": "Iris pseudacorus L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25274", "5.93252"]},
+      "properties": {"name": "Filipendula ulmaria (L.) Maxim."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23917", "5.97525"]},
+      "properties": {"name": "Rosa canina L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23871", "5.97479"]},
+      "properties": {"name": "Ranunculus repens L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23922", "5.97499"]},
+      "properties": {"name": "Geranium robertianum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23922", "5.97499"]},
+      "properties": {"name": "Stellaria nemorum L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25366", "5.9436"]},
+      "properties": {"name": "Melissa officinalis L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.2538", "5.94383"]},
+      "properties": {"name": "Acanthus mollis L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.2386", "5.97526"]},
+      "properties": {"name": "Lotus pedunculatus Cav."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.23922", "5.97499"]},
+      "properties": {"name": "Stellaria graminea L."}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.22487", "5.98672"]},
+      "properties": {"name": "Deschampsia cespitosa"}
+    },
+  {
+     "geometry": {"type": "Point", "coordinates": ["45.25325", "5.93467"]},
+      "properties": {"name": null}
+    }
+  ]
+}

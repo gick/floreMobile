@@ -31,7 +31,9 @@
     "paper-checkbox": "PolymerElements/paper-checkbox#^2.0.0",
     "iron-form": "PolymerElements/iron-form#^2.0.0",
     "paper-spinner": "PolymerElements/paper-spinner#^2.0.0",
-    "paper-toast": "PolymerElements/paper-toast#^2.0.0"
+    "paper-toast": "PolymerElements/paper-toast#^2.0.0",
+    "point-overlay": "brendankenny/point-overlay",
+    "socket-io": "daniel-cotton/socket-io#^1.1.1"
   },
   "devDependencies": {
     "web-component-tester": "^4.0.0"
