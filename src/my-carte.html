@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/point-overlay/point-overlay.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="./element/gmap-with-markers.html">
 
 <dom-module id="my-carte">
     <template>
@@ -17,14 +18,13 @@
             display: inline-flex;
         }
         </style>
-    <iron-ajax
+<!--     <iron-ajax
             id='ajax'
-         url="../releve"
+         url="../listFloreData"
          handle-as="json"
          on-response="handleResponse"></iron-ajax>
-    <google-map id='map' map="{{map}}" latitude="47.74" longitude="-0.61" zoom="13" disableDefaultUI></google-map>
-    <point-overlay map="{{map}}" data='{{data}}'></point-overlay>
-    <paper-button raised on-click='load'>Load</paper-button>
+ -->   
+    <gmap-with-markers></gmap-with-markers>
     </template>
 
     <script>
@@ -32,18 +32,6 @@
         'use strict';
 
         Polymer({
-            is: 'my-carte',
-            load:function(){
-                this.$.ajax.generateRequest()
-            },
-            handleResponse:function(resp){
-                var response=resp.detail.__data__.response
-                for(var i=1;i<1000;i++){
-                    this.push('data',{"lat":response[i].Latitude,"lng":response[i].Longitude})
-                }
-
-                
-            },
             ready: function() {
                 this.data=[]
 
