@@ -5,10 +5,14 @@
 <link rel="import" href="../../bower_components/google-map/google-map-marker.html">
 <link rel="import" href="../../bower_components/google-map/google-map-poly.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/point-overlay/point-overlay.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="./element/gmap-with-markers.html">
-
 <dom-module id="my-carte">
     <template>
         <style>
@@ -18,27 +22,44 @@
             display: inline-flex;
         }
         </style>
-<!--     <iron-ajax
+        <!--     <iron-ajax
             id='ajax'
          url="../listFloreData"
          handle-as="json"
          on-response="handleResponse"></iron-ajax>
- -->   
-    <gmap-with-markers></gmap-with-markers>
+ -->
+        <iron-ajax auto url="/listFamily" on-response="handleResponse" last-response="{{families}}"></iron-ajax>
+        <paper-card style="display:block" heading="Observations" image="" elevation="1" animated-shadow="false">
+            <div class="card-content" style='display:inline-flex;flex-wrap: wrap;'>
+                <paper-dropdown-menu>
+                    <paper-listbox slot="dropdown-content" selected="1">
+                        <template is="dom-repeat" items="{{families}}">
+                            <paper-item>{{item}}</paper-item>
+                        </template>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+            <div class="card-actions">
+                <paper-button on-click='back'>RETOUR</paper-button>
+            </div>
+        </paper-card>
+        <gmap-with-markers></gmap-with-markers>
     </template>
-
     <script>
     (function() {
         'use strict';
 
         Polymer({
             ready: function() {
-                this.data=[]
+                this.data = []
 
 
             },
+            handleResponse:function(){
+                console.log(this.familyElem)
+            },
 
-            
+
         })
     })();
     </script>

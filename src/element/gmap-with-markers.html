@@ -1,6 +1,5 @@
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../../bower_components/bower_components/iron-ajax.html">
-
+<link rel="import" href="../../../bower_components/bower_components/iron-ajax/iron-ajax.html">
 <script src="./markerclusterer.js" type="text/javascript"></script>
 <script src="data.json"></script>
 <link rel="import" href="../../../bower_components/google-map/google-map.html">
@@ -18,12 +17,7 @@
         }
         </style>
         <div id='map' class="mymap"></div>
-        <iron-ajax
-             url="./data.json"
-             id="xhr"
-             handle-as="json"
-             on-response="drawMap"
-             last-request="{{data}}"></iron-ajax>
+        <iron-ajax url="/listObsWithinArea" id="xhr" params="{{newBounds}}" handle-as="json" on-response="drawMarker" last-request="{{data}}"></iron-ajax>
         <google-maps-api id='gmap' api-key="AIzaSyBw9aJOCPfc4Hel0sTET3DgwJhuDeCDqdc" version="3.exp"></google-maps-api>
     </template>
     <script>
@@ -34,24 +28,59 @@
             is: 'gmap-with-markers',
 
             ready: function() {
+                this.newBounds = {}
 
                 this.$.gmap.addEventListener('api-load', function(e) {
                     // this.api === google.maps
-                    this.$.xhr.generateRequest()
+                    this.drawMap()
                 }.bind(this));
 
             },
-            drawMap: function() {
-                var center = new google.maps.LatLng(37.4419, -122.1419);
-
-                var map = new google.maps.Map(this.$.map, {
-                    zoom: 3,
-                    center: center,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
+            drawMarker: function() {
+                var markers = []
+                var infowindow = new google.maps.InfoWindow({
+                    content: ''
                 });
 
-                var markers = [];
-                for (var i = 0; i < 100; i++) {
+                for (var i = 0; i < this.data.__data__.response.length; i++) {
+                    var markerPos = new google.maps.LatLng(this.data.__data__.response[i].lat, this.data.__data__.response[i].lng)
+
+                    var marker = new google.maps.Marker({
+                        position: markerPos,
+                        title: this.data.__data__.response[i].Family.toString()
+                    });
+                    var that=this
+                    google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                        return function() {
+                            var contentString = '<div id="content">' + that.data.__data__.response[i].Family.toString() + '</div>'
+                            console.log(that.data.__data__.response[i])
+                            infowindow.setContent(contentString);
+                            infowindow.open(this.mapRef, marker);
+                        }
+                    })(marker, i));
+
+                    markers.push(marker);
+                }
+                var markerCluster = new MarkerClusterer(this.mapRef, markers, { imagePath: '../images/m' });
+
+
+            },
+            getNewBounds: function() {
+                if (!this.mapRef) {
+                    return
+                }
+                var bounds = this.mapRef.getBounds();
+                var ne = bounds.getNorthEast(); // LatLng of the north-east corner
+                var sw = bounds.getSouthWest(); // LatLng of the south-west corder
+                var nw = new google.maps.LatLng(ne.lat(), sw.lng());
+                var se = new google.maps.LatLng(sw.lat(), ne.lng());
+                this.newBounds.bottomLat = nw.lat()
+                this.newBounds.bottomLng = nw.lng()
+                this.newBounds.topLat = se.lat()
+                this.newBounds.topLng = se.lng()
+                this.$.xhr.generateRequest()
+
+                /* for (var i = 0; i < 100; i++) {
                     var dataPhoto = data.photos[i];
                     var latLng = new google.maps.LatLng(dataPhoto.latitude,
                         dataPhoto.longitude);
@@ -60,7 +89,41 @@
                     });
                     markers.push(marker);
                 }
-                var markerCluster = new MarkerClusterer(map, markers, { imagePath: '../images/m' });
+                var markerCluster = new MarkerClusterer(this.mapRef, markers, { imagePath: '../images/m' });
+    */
+
+            },
+
+            drawMap: function() {
+                var map = new google.maps.Map(this.$.map, {
+                    zoom: 11,
+                    minZoom: 7,
+                    center: new google.maps.LatLng(48.08507, -0.755811),
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                });
+                var lastValidCenter = new google.maps.LatLng(48.08507, -0.755811)
+                var allowedBounds = new google.maps.LatLngBounds(
+                    new google.maps.LatLng(43.810128, -1.14172),
+                    new google.maps.LatLng(49.690593, 4.746308)
+                )
+
+                google.maps.event.addListener(map, 'dragend', function() {
+                    this.getNewBounds()
+
+                }.bind(this))
+
+                google.maps.event.addListener(map, 'center_changed', function() {
+                    if (allowedBounds.contains(map.getCenter())) {
+
+                        lastValidCenter = map.getCenter();
+                        return;
+                    }
+                    map.panTo(lastValidCenter);
+                }.bind(this))
+                this.mapRef = map
+                // not valid anymore => return to last valid position
+
+
 
                 // body...
             },
