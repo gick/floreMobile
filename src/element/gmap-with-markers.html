@@ -32,6 +32,7 @@
 
                 this.$.gmap.addEventListener('api-load', function(e) {
                     // this.api === google.maps
+
                     this.drawMap()
                 }.bind(this));
 
@@ -61,12 +62,17 @@
 
                     markers.push(marker);
                 }
-                var markerCluster = new MarkerClusterer(this.mapRef, markers, { imagePath: '../images/m' });
+                this.markerclusterer.clearMarkers()
+                this.markerclusterer.addMarkers(markers)
+              //  var markerCluster = new MarkerClusterer(this.mapRef, markers, { imagePath: '../images/m' });
 
 
             },
             getNewBounds: function() {
                 if (!this.mapRef) {
+                    return
+                }
+                if(!this.markerclusterer){
                     return
                 }
                 var bounds = this.mapRef.getBounds();
@@ -97,7 +103,7 @@
             drawMap: function() {
                 var map = new google.maps.Map(this.$.map, {
                     zoom: 11,
-                    minZoom: 7,
+                    minZoom: 10,
                     center: new google.maps.LatLng(48.08507, -0.755811),
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 });
@@ -107,10 +113,11 @@
                     new google.maps.LatLng(49.690593, 4.746308)
                 )
 
-                google.maps.event.addListener(map, 'dragend', function() {
+                google.maps.event.addListener(map, 'idle', function() {
                     this.getNewBounds()
 
                 }.bind(this))
+
 
                 google.maps.event.addListener(map, 'center_changed', function() {
                     if (allowedBounds.contains(map.getCenter())) {
@@ -121,6 +128,8 @@
                     map.panTo(lastValidCenter);
                 }.bind(this))
                 this.mapRef = map
+                this.markerclusterer = new MarkerClusterer(this.mapRef, [], { imagePath: '../images/m' });
+
                 // not valid anymore => return to last valid position
 
 
