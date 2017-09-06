@@ -53,7 +53,7 @@
                     var that=this
                     google.maps.event.addListener(marker, 'click', (function(marker, i) {
                         return function() {
-                            var contentString = '<div id="content">' + that.data.__data__.response[i].Family.toString() + '</div>'
+                            var contentString = '<div id="content">' + that.data.__data__.response[i].Specie.toString() + '</div>'
                             console.log(that.data.__data__.response[i])
                             infowindow.setContent(contentString);
                             infowindow.open(this.mapRef, marker);
